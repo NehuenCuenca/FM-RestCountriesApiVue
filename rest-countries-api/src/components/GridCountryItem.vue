@@ -28,7 +28,7 @@ li.grid-country-item {
 .grid-country-item img {
   /* border: 2px solid black; */
   width: 100%;
-  height: 10rem;
+  height: 8rem;
   object-fit: fill;
   object-position: center center;
 }

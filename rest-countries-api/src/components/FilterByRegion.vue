@@ -30,7 +30,7 @@ export default {
       if( regionSelected.length === 0 ) return
 
       const countries = await this.getCountriesByRegion( regionSelected )
-      console.log(countries);
+      this.$emit('changeRegion', countries)
     },
   },
 };

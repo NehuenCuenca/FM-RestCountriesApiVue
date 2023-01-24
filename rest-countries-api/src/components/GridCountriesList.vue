@@ -35,8 +35,8 @@ ul.grid-countries-list {
   display: grid;
   align-content: center;
   justify-content: center;
-  grid-template-columns: repeat(5, 14rem);
-  grid-auto-rows: 10rem;
+  grid-template-columns: repeat(4, 13rem);
+  grid-auto-rows: 8rem;
   gap: 20px;
 }
 </style>

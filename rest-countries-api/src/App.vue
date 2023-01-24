@@ -3,7 +3,7 @@
   <div class="container">
     <div id="filters">
       <FilterByCountry />
-      <FilterByRegion />
+      <FilterByRegion @changeRegion="applyFilter"/>
     </div>
 
     <GridCountriesList :countries="firstTenCountries"/>
@@ -37,6 +37,9 @@ export default {
     async getAllCountries() {
       const { data } = await countriesApi.get('/all')
       this.countries = data || []
+    },
+    applyFilter( filters = [] ){
+      this.countries = filters
     }
   },
   computed: {
