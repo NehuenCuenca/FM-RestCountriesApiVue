@@ -36,4 +36,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+select {
+  font-size: .9rem;
+  padding: .5rem 2rem .5rem .5rem;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
+</style>

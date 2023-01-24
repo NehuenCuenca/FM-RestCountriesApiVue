@@ -3,10 +3,10 @@
   <div class="container">
     <div id="filters">
       <FilterByCountry />
-      <FilterByRegion @changeRegion="applyFilter"/>
+      <FilterByRegion @changeRegion="applyFilter" />
     </div>
 
-    <GridCountriesList :countries="firstTenCountries"/>
+    <GridCountriesList :countries="firstTenCountries" />
   </div>
 </template>
 
@@ -15,7 +15,7 @@ import NavBar from "./components/NavBar.vue";
 import FilterByCountry from "./components/FilterByCountry.vue";
 import FilterByRegion from "./components/FilterByRegion.vue";
 import GridCountriesList from "./components/GridCountriesList.vue";
-import countriesApi from '@/api/countriesApi'
+import countriesApi from "@/api/countriesApi";
 
 export default {
   name: "App",
@@ -25,32 +25,43 @@ export default {
     FilterByRegion,
     GridCountriesList,
   },
-  data(){
+  data() {
     return {
       countries: [],
-    }
+    };
   },
   created() {
-    this.getAllCountries()
+    this.getAllCountries();
   },
   methods: {
     async getAllCountries() {
-      const { data } = await countriesApi.get('/all')
-      this.countries = data || []
+      const { data } = await countriesApi.get("/all");
+      this.countries = data || [];
     },
-    applyFilter( filters = [] ){
-      this.countries = filters
-    }
+    applyFilter(filters = []) {
+      this.countries = filters;
+    },
   },
   computed: {
     firstTenCountries() {
-      return this.countries.slice(0,10) 
-    }
-  }
+      return this.countries.slice(0, 10);
+    },
+  },
 };
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,700&display=swap');
+:root {
+    --DarkBlue:hsl(209, 23%, 22%);
+    --VeryDarkBlue: hsl(207, 26%, 17%);
+    --VeryDarkBlue2: hsl(200, 15%, 8%);
+    --DarkGray: hsl(0, 0%, 52%);
+    --VeryLightGray: hsl(0, 0%, 98%);
+    --White: hsl(0, 0%, 100%);
+
+}
+
 html,
 body {
   width: 100%;
@@ -61,7 +72,7 @@ body {
 
 html {
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 *,
@@ -75,11 +86,15 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: var(--White);
   width: 100%;
   height: auto;
   min-height: 100vh;
-  background-color: #486684;
+  background-color: var(--VeryDarkBlue);
+}
+
+nav#nav-bar {
+  background-color: var(--DarkBlue);
 }
 
 .container {
@@ -99,5 +114,18 @@ html {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.grid-country-item {
+  background-color: var(--DarkBlue);
+}
+input#filter-by-country {
+  color: var(--White);
+  background-color: var(--DarkBlue);
+}
+
+select#filter-by-region {
+  color: var(--White);
+  background-color: var(--DarkBlue);
 }
 </style>

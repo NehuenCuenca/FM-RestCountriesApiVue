@@ -7,10 +7,9 @@
 
 
 <style>
-nav#nav-bar {
+nav {
   width: 100%;
   padding: 1rem 2rem;
-  background-color: cadetblue;
   display: flex;
   justify-content: space-between;
 }
