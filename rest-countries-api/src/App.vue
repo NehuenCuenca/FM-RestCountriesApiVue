@@ -1,13 +1,12 @@
 <template>
   <NavBar />
-  <h1>Holiwis</h1>
   <div class="container">
     <div id="filters">
       <FilterByCountry />
       <FilterByRegion />
     </div>
 
-    <GridCountriesList />
+    <GridCountriesList :countries="firstTenCountries"/>
   </div>
 </template>
 
@@ -16,6 +15,7 @@ import NavBar from "./components/NavBar.vue";
 import FilterByCountry from "./components/FilterByCountry.vue";
 import FilterByRegion from "./components/FilterByRegion.vue";
 import GridCountriesList from "./components/GridCountriesList.vue";
+import countriesApi from '@/api/countriesApi'
 
 export default {
   name: "App",
@@ -25,6 +25,25 @@ export default {
     FilterByRegion,
     GridCountriesList,
   },
+  data(){
+    return {
+      countries: [],
+    }
+  },
+  created() {
+    this.getAllCountries()
+  },
+  methods: {
+    async getAllCountries() {
+      const { data } = await countriesApi.get('/all')
+      this.countries = data || []
+    }
+  },
+  computed: {
+    firstTenCountries() {
+      return this.countries.slice(0,10) 
+    }
+  }
 };
 </script>
 
@@ -56,15 +75,17 @@ html {
   color: #2c3e50;
   width: 100%;
   height: auto;
+  min-height: 100vh;
+  background-color: #486684;
 }
 
 .container {
   width: 100%;
   height: auto;
-  background-color: #486684;
+  min-height: 40rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   row-gap: 8vh;
   padding: 2rem 0;

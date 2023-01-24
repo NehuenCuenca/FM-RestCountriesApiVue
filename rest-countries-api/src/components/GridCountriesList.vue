@@ -1,41 +1,42 @@
 <template>
   <ul class="grid-countries-list">
-    <!-- ABSTRAER EL COUNTRY -->
-    <li class="grid-country-item">Some countrie</li>
-    <li class="grid-country-item">Some countrie</li>
-    <li class="grid-country-item">Some countrie</li>
-    <li class="grid-country-item">Some countrie</li>
-    <li class="grid-country-item">Some countrie</li>
-    <li class="grid-country-item">Some countrie</li>
-    <li class="grid-country-item">Some countrie</li>
-    <li class="grid-country-item">Some countrie</li>
-    <li class="grid-country-item">Some countrie</li>
-    <li class="grid-country-item">Some countrie</li>
+    <GridCountryItem
+      v-for="(country, index) in countries"
+      :key="index"
+      :country="country"
+    />
   </ul>
 </template>
 
 <script>
+import GridCountryItem from "./GridCountryItem.vue";
+
 export default {
-    name: 'GridCountriesList'
+  name: "GridCountriesList",
+  props: {
+    countries: {
+      type: Array,
+      required: true,
+    },
+  },
+  components: {
+    GridCountryItem,
+  },
 };
 </script>
 
-<style>
+<style scoped>
 ul.grid-countries-list {
-  width: 80%;
+  width: 95%;
   height: auto;
   margin: 0;
   padding: 1rem;
   list-style-type: none;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 3vh 1vw;
-}
-
-li.grid-country-item {
-  font-size: 1.3rem;
-  color: black;
-  background-color: bisque;
+  align-content: center;
+  justify-content: center;
+  grid-template-columns: repeat(5, 14rem);
+  grid-auto-rows: 10rem;
+  gap: 20px;
 }
 </style>
