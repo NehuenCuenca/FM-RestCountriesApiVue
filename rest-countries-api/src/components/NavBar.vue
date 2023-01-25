@@ -13,4 +13,9 @@ nav {
   display: flex;
   justify-content: space-between;
 }
+nav span {
+  font-weight: bold;
+  letter-spacing: 1px;
+  user-select: none;
+}
 </style>

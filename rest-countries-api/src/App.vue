@@ -119,6 +119,11 @@ nav#nav-bar {
 .grid-country-item {
   background-color: var(--DarkBlue);
 }
+.modal-country {
+  background-color: var(--DarkBlue);
+  color: var(--White);
+}
+
 input#filter-by-country {
   color: var(--White);
   background-color: var(--DarkBlue);
