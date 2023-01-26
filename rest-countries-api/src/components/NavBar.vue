@@ -43,7 +43,10 @@ button#changeTheme{
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: 1.1rem;
   color: var(--text-primary-color);
+  padding: 0;
+}
+nav > *  {
+  font-size: 1.1rem;
 }
 </style>

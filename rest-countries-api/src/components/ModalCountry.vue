@@ -132,7 +132,8 @@ export default {
   height: 10rem;
   align-self: center;
   margin-bottom: 3vh;
-  border: 1px solid white;
+  border: 2px solid var(--accent-color);
+  box-shadow: 5px 5px 10px var(--accent-color);
 }
 
 .good-info #linkGoogleMap {

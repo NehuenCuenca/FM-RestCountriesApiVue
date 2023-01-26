@@ -36,7 +36,6 @@ export default {
   },
   methods: {
     setCurrentTheme(theme) {
-      console.log(theme);
       this.currentTheme = theme;
       document.documentElement.className = theme;
     },
