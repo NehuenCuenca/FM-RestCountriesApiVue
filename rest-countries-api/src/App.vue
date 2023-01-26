@@ -6,7 +6,7 @@
       <FilterByRegion @changeRegion="applyFilter" />
     </div>
 
-    <GridCountriesList :countries="firstTenCountries" />
+    <GridCountriesList :countries="countries" />
   </div>
 </template>
 
@@ -51,15 +51,14 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,700&display=swap");
 :root {
-    --DarkBlue:hsl(209, 23%, 22%);
-    --VeryDarkBlue: hsl(207, 26%, 17%);
-    --VeryDarkBlue2: hsl(200, 15%, 8%);
-    --DarkGray: hsl(0, 0%, 52%);
-    --VeryLightGray: hsl(0, 0%, 98%);
-    --White: hsl(0, 0%, 100%);
-
+  --DarkBlue: hsl(209, 23%, 22%);
+  --VeryDarkBlue: hsl(207, 26%, 17%);
+  --VeryDarkBlue2: hsl(200, 15%, 8%);
+  --DarkGray: hsl(0, 0%, 52%);
+  --VeryLightGray: hsl(0, 0%, 98%);
+  --White: hsl(0, 0%, 100%);
 }
 
 html,
@@ -72,7 +71,7 @@ body {
 
 html {
   box-sizing: border-box;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
 }
 
 *,

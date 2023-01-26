@@ -1,6 +1,6 @@
 <template>
   <ul class="grid-countries-list">
-    <GridCountryItem
+    <GridCountriesItem
       v-for="(country, index) in countries"
       :key="index"
       :country="country"
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import GridCountryItem from "./GridCountryItem.vue";
+import GridCountriesItem from "./GridCountriesItem.vue";
 
 export default {
   name: "GridCountriesList",
@@ -20,7 +20,7 @@ export default {
     },
   },
   components: {
-    GridCountryItem,
+    GridCountriesItem,
   },
 };
 </script>
@@ -36,7 +36,7 @@ ul.grid-countries-list {
   align-content: center;
   justify-content: center;
   grid-template-columns: repeat(4, 15rem);
-  grid-auto-rows: 17rem;
+  grid-auto-rows: 18rem;
   gap: 20px;
 }
 </style>

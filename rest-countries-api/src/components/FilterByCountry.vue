@@ -1,14 +1,68 @@
 <template>
-  <input
-    type="text"
-    placeholder="Search for a country..."
-    id="filter-by-country"
+  <form @submit.prevent="onInputCountry">
+    <input
+      type="text"
+      placeholder="Search for a country..."
+      id="filter-by-country"
+      v-model="inputCountry"
+    />
+  </form>
+
+  <ModalCountry
+    :country="country"
+    :msgError="msgError"
+    v-if="isModalOpen"
+    @onCloseModal="toggleModal"
   />
 </template>
 
 <script>
+import countriesApi from "../api/countriesApi";
+import ModalCountry from "../components/ModalCountry.vue";
+
 export default {
-  name: "FilterByCountrie",
+  name: "FilterByCountry",
+  data() {
+    return {
+      inputCountry: "",
+      isModalOpen: false,
+      country: null,
+      msgError: null,
+    };
+  },
+  methods: {
+    toggleModal() {
+      this.isModalOpen = !this.isModalOpen;
+      if (!this.isModalOpen) { //Si cierra el modal, borro el country
+        this.country = null;
+        this.msgError = null;
+      }
+    },
+    async getCountryByName(country) {
+      try {
+        const {
+          data: [countryResponse],
+        } = await countriesApi.get(`/name/${country}`);
+        this.country = countryResponse;
+        this.toggleModal();
+      } catch (error) {
+        const {
+          response: { data },
+        } = error;
+        console.error(data.message);
+        this.country = null;
+        this.msgError = data.message;
+        this.toggleModal();
+      }
+      this.inputCountry = ''
+    },
+    onInputCountry() {
+      this.getCountryByName(this.inputCountry);
+    },
+  },
+  components: {
+    ModalCountry,
+  },
 };
 </script>
 
@@ -24,6 +78,6 @@ input {
 
 ::placeholder {
   color: white;
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 </style>
