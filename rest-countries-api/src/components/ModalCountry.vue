@@ -1,7 +1,7 @@
 <template>
-  <div class="modal-container">
+  <div class="modal-container" @click="onCloseShadow">
     <div class="modal-country" v-if="country">
-      <button @click="$emit('onCloseModal')" id="close-modal">Close</button>
+      <button @click="$emit('onCloseModal')" id="close-modal">Back</button>
       <div class="good-info">
         <img :src="country.flags.png" :alt="`${country.name.common} flag`" />
         <span
@@ -39,6 +39,13 @@ export default {
     msgError: {
       type: String,
     }
+  },
+  methods: {
+    onCloseShadow(e) {
+      if(e.target.classList.contains('modal-container')){
+        this.$emit('onCloseModal')
+      }
+    },
   },
   computed: {
     showCapitalOrNone() {
@@ -113,7 +120,7 @@ export default {
   font-size: 1.1rem;
 }
 #modal-error h3 {
-  color: rgb(255, 55, 55);
+  color: var(--DarkGray);
 }
 
 .good-info span {
@@ -138,6 +145,7 @@ export default {
   font-size: 1.8rem;
   font-weight: bold;
   text-decoration: none;
+  text-shadow: 1px 1px 5px black;
 }
 a:hover {
   color: darkcyan;

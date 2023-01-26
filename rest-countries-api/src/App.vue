@@ -1,5 +1,5 @@
 <template>
-  <NavBar />
+  <NavBar :currentTheme="currentTheme" @onSetCurrentTheme="setCurrentTheme" />
   <div class="container">
     <div id="filters">
       <FilterByCountry />
@@ -28,12 +28,18 @@ export default {
   data() {
     return {
       countries: [],
+      currentTheme: "light-theme",
     };
   },
   created() {
     this.getAllCountries();
   },
   methods: {
+    setCurrentTheme(theme) {
+      console.log(theme);
+      this.currentTheme = theme;
+      document.documentElement.className = theme;
+    },
     async getAllCountries() {
       const { data } = await countriesApi.get("/all");
       this.countries = data || [];
@@ -52,13 +58,19 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,700&display=swap");
+
 :root {
-  --DarkBlue: hsl(209, 23%, 22%);
-  --VeryDarkBlue: hsl(207, 26%, 17%);
-  --VeryDarkBlue2: hsl(200, 15%, 8%);
-  --DarkGray: hsl(0, 0%, 52%);
-  --VeryLightGray: hsl(0, 0%, 98%);
-  --White: hsl(0, 0%, 100%);
+  --background-color-primary: hsl(0, 0%, 100%);
+  --background-color-secondary: hsl(0, 0%, 98%);
+  --accent-color: hsl(0, 0%, 52%);
+  --text-primary-color: black;
+}
+
+:root.dark-theme {
+  --background-color-primary: hsl(208, 23%, 22%);
+  --background-color-secondary: hsl(207, 26%, 17%);
+  --accent-color: hsl(200, 15%, 8%);
+  --text-primary-color: white;
 }
 
 html,
@@ -85,15 +97,16 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: var(--White);
+  color: var(--text-primary-color);
   width: 100%;
   height: auto;
   min-height: 100vh;
-  background-color: var(--VeryDarkBlue);
+  background-color: var(--background-color-secondary);
 }
 
 nav#nav-bar {
-  background-color: var(--DarkBlue);
+  background-color: var(--background-color-primary);
+  box-shadow: 2px 2px 5px var(--accent-color);
 }
 
 .container {
@@ -116,20 +129,23 @@ nav#nav-bar {
 }
 
 .grid-country-item {
-  background-color: var(--DarkBlue);
+  background-color: var(--background-color-primary);
+  box-shadow: 1px 1px 11px var(--accent-color);
 }
 .modal-country {
-  background-color: var(--DarkBlue);
-  color: var(--White);
+  background-color: var(--background-color-primary);
+  color: var(--text-primary-color);
 }
 
 input#filter-by-country {
-  color: var(--White);
-  background-color: var(--DarkBlue);
+  color: var(--text-primary-color);
+  background-color: var(--background-color-primary);
+  box-shadow: 1px 1px 10px var(--accent-color);
 }
 
 select#filter-by-region {
-  color: var(--White);
-  background-color: var(--DarkBlue);
+  color: var(--text-primary-color);
+  background-color: var(--background-color-primary);
+  box-shadow: 1px 1px 10px var(--accent-color);
 }
 </style>

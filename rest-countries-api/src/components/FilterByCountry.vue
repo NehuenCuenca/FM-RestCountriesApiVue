@@ -77,7 +77,7 @@ input {
 }
 
 ::placeholder {
-  color: white;
+  color: var(--text-primary-color);
   font-size: 0.9rem;
 }
 </style>
