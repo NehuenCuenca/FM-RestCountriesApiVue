@@ -39,4 +39,17 @@ ul.grid-countries-list {
   grid-auto-rows: 18rem;
   gap: 20px;
 }
+
+@media (max-width: 425px) {  
+
+  ul.grid-countries-list {
+    width: 95%;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    grid-template-columns: 15rem;
+    grid-auto-rows: auto;
+    gap: 20px;
+  }
+}
 </style>

@@ -109,4 +109,11 @@ li.grid-country-item {
   align-items: flex-start;
   text-align: start;
 }
+
+@media (max-width: 425px) {  
+
+  li.grid-country-item {
+    padding-bottom: 1rem;
+ }
+}
 </style>

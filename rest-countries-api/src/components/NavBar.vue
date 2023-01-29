@@ -49,4 +49,10 @@ button#changeTheme{
 nav > *  {
   font-size: 1.1rem;
 }
+
+@media (max-width: 425px) {  
+  nav#nav-bar { 
+    width: 100%;
+  }
+}
 </style>

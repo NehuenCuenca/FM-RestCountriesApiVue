@@ -170,4 +170,11 @@ button#close-modal:hover {
   background-color: red;
   color: white;
 }
+
+@media (max-width: 425px) {  
+  .modal-country {
+    width: 90%;
+    border-radius: 1rem;
+  } 
+}
 </style>

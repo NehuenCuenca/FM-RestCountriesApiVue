@@ -147,4 +147,17 @@ select#filter-by-region {
   background-color: var(--background-color-primary);
   box-shadow: 1px 1px 10px var(--accent-color);
 }
+
+
+@media (max-width: 425px) {  
+  #filters {
+    width: 80%;
+    min-width: 20rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    row-gap: 5vh;
+  } 
+}
 </style>
