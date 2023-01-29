@@ -6,21 +6,34 @@
       <FilterByRegion @changeRegion="applyFilter" />
     </div>
 
-    <GridCountriesList :countries="countries" />
+    <GridCountriesList
+      :countries="countries[actualPage] || []"
+      v-if="!msgErrorAPI"
+    />
+    <h4 class="title-error" v-else>{{ msgErrorAPI }}</h4>
+
+    <NavPaginate
+      :pages="Object.keys(countries)"
+      :actualPage="actualPage"
+      @onChangePage="changePage"
+    />
   </div>
 </template>
 
 <script>
 import NavBar from "./components/NavBar.vue";
+import NavPaginate from "./components/NavPaginate.vue";
 import FilterByCountry from "./components/FilterByCountry.vue";
 import FilterByRegion from "./components/FilterByRegion.vue";
 import GridCountriesList from "./components/GridCountriesList.vue";
 import countriesApi from "@/api/countriesApi";
+import paginateCountries from "./helpers/paginate";
 
 export default {
   name: "App",
   components: {
     NavBar,
+    NavPaginate,
     FilterByCountry,
     FilterByRegion,
     GridCountriesList,
@@ -28,28 +41,42 @@ export default {
   data() {
     return {
       countries: [],
-      currentTheme: "light-theme",
+      currentTheme: "dark-theme",
+      msgErrorAPI: "",
+      actualPage: 1,
     };
   },
   created() {
     this.getAllCountries();
+    this.setCurrentTheme(this.currentTheme);
   },
   methods: {
+    changePage(page) {
+      if (page === this.actualPage) return;
+
+      this.actualPage = page;
+    },
+
     setCurrentTheme(theme) {
       this.currentTheme = theme;
       document.documentElement.className = theme;
     },
+
     async getAllCountries() {
-      const { data } = await countriesApi.get("/all");
-      this.countries = data || [];
+      try {
+        const { data } = await countriesApi.get("/all");
+        this.msgErrorAPI = "";
+
+        this.countries = paginateCountries(data) || [];
+      } catch (error) {
+        // console.warn(error);
+        this.msgErrorAPI = `${error.message}: Service unavailable. Try later :(`;
+      }
     },
+
     applyFilter(filters = []) {
-      this.countries = filters;
-    },
-  },
-  computed: {
-    firstTenCountries() {
-      return this.countries.slice(0, 10);
+      this.changePage(1);
+      this.countries = paginateCountries(filters) || [];
     },
   },
 };
@@ -127,6 +154,14 @@ nav#nav-bar {
   align-items: center;
 }
 
+.title-error {
+  color: red;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  word-spacing: 5px;
+  text-shadow: 2px 2px 10px black;
+}
+
 .grid-country-item {
   background-color: var(--background-color-primary);
   box-shadow: 1px 1px 11px var(--accent-color);
@@ -148,8 +183,7 @@ select#filter-by-region {
   box-shadow: 1px 1px 10px var(--accent-color);
 }
 
-
-@media (max-width: 425px) {  
+@media (max-width: 425px) {
   #filters {
     width: 80%;
     min-width: 20rem;
@@ -158,6 +192,6 @@ select#filter-by-region {
     justify-content: center;
     align-items: center;
     row-gap: 5vh;
-  } 
+  }
 }
 </style>

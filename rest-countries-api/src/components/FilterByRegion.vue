@@ -25,14 +25,27 @@ export default {
       const { data } = await countriesApi.get(`/region/${region}`);
       return data
     },
-    async onChangeRegion(event) {
+    async getAllCountries() {
+      try {
+        const { data } = await countriesApi.get("/all");
+        return data
+      } catch (error) {
+        console.warn(error);
+        alert(`${error}`)
+      }
+    },
+    async onChangeRegion() {
       const regionSelected = event.target.value 
-      if( regionSelected.length === 0 ) return
+      if( regionSelected.length === 0 ) {
+        const countries = await this.getAllCountries()
+        this.$emit('changeRegion', countries)
+        return
+      }
 
       const countries = await this.getCountriesByRegion( regionSelected )
       this.$emit('changeRegion', countries)
     },
-  },
+  }
 };
 </script>
 
