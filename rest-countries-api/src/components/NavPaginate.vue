@@ -1,14 +1,14 @@
 <template>
   <nav id="paginate-countries">
-    <a
+    <button
       v-for="(page, index) in pages"
       :key="index"
-      @click="$emit('onChangePage', Number(page))"
+      @click="onClickPage(page)"
       class="page"
-      :class="(index+1 === actualPage) ? 'active' : '' "
+      :class="(page == actualPage) ? 'active' : '' "
     >
       {{ page }}
-    </a>
+    </button>
   </nav>
 </template>
 
@@ -24,6 +24,12 @@ export default {
       type: Number,
     }
   },
+  methods: {
+    onClickPage(page) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      this.$emit('onChangePage', Number(page))
+    }
+  }
 };
 </script>
 
@@ -40,15 +46,27 @@ nav#paginate-countries {
   column-gap: 1rem;
 }
 
-a.page {
+.page {
   cursor: pointer;
-  font-size: 2.5rem;
+  font-size: 2rem;
   height: auto;
+  border: none;
+  background: none;
+  color: var(--primary-text-color);
+}
+
+.page:hover {
+  transition: color 200ms ease;
+  color: cadetblue;
 }
 
 .active {
   background-color: cadetblue;
   padding: 0.4rem;
   border-radius: 1rem;
+}
+
+.page.active:hover {
+  color: inherit;
 }
 </style>

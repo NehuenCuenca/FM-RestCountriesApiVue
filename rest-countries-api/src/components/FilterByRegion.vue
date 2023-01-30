@@ -36,13 +36,14 @@ export default {
     },
     async onChangeRegion() {
       const regionSelected = event.target.value 
+      let countries = [];
+
       if( regionSelected.length === 0 ) {
-        const countries = await this.getAllCountries()
-        this.$emit('changeRegion', countries)
-        return
+        countries = await this.getAllCountries()
+      } else {
+        countries = await this.getCountriesByRegion( regionSelected )
       }
 
-      const countries = await this.getCountriesByRegion( regionSelected )
       this.$emit('changeRegion', countries)
     },
   }
