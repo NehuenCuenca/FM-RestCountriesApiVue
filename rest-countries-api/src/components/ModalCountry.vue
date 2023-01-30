@@ -4,26 +4,44 @@
       <button @click="$emit('onCloseModal')" id="close-modal">Back</button>
       <div class="good-info">
         <img :src="country.flags.png" :alt="`${country.name.common} flag`" />
-        <span
-          >📛 <u>Name:</u> {{ country.name.common }} ('{{
-            country.flag
-          }}')</span
-        >
-        <span>📍 <u>Capital:</u> {{ showCapitalOrNone }}</span>
-        <span>🌏 <u>Region/Subregion:</u> {{ showRegionAndSubRegion }}</span>
-        <span>💲 <u>Currencies:</u> {{ showCurrencies }}</span>
-        <span>👅 <u>Languages:</u> {{ showLanguages }}</span>
-        <span id="linkGoogleMap"
+
+        <ul class="content-list">
+          <li class="item">
+            <i class="emoji">📛</i>
+            <span><u>Name:</u> {{ country.name.common }} ('{{ country.flag }}')</span>
+          </li>
+          <li class="item">
+            <i class="emoji">📍</i>
+            <span><u>Capital:</u> {{ showCapitalOrNone }}</span>
+          </li>
+          <li class="item">
+            <i class="emoji">🌏</i>
+            <span><u>Region/Subregion:</u> {{ showRegionAndSubRegion }}</span>
+          </li>
+          <li class="item">
+            <i class="emoji">📐</i>
+            <span><u>Area:</u> {{ showAreaOrNone }} km²</span>
+          </li>
+          <li class="item">
+            <i class="emoji">💲</i>
+            <span><u>Currencies:</u> {{ showCurrencies }}</span>
+          </li>
+          <li class="item">
+            <i class="emoji">👅</i>
+            <span><u>Languages:</u> {{ showLanguages }}</span>
+          </li>
+          <span id="linkGoogleMap"
           ><a :href="country.maps.googleMaps" target="_blank"
             >👀 Look in Google Maps 🌐</a
           ></span
         >
+        </ul>
       </div>
     </div>
     <div class="modal-country" id="modal-error" v-else>
-        <button @click="$emit('onCloseModal')" id="close-modal">Close</button>
-        <h3>Error: {{msgError}}.</h3>
-        I don't know that country yet 😶
+      <button @click="$emit('onCloseModal')" id="close-modal">Close</button>
+      <h3>Error: {{ msgError }}.</h3>
+      I don't know that country yet 😶
     </div>
   </div>
 </template>
@@ -38,12 +56,12 @@ export default {
     },
     msgError: {
       type: String,
-    }
+    },
   },
   methods: {
     onCloseShadow(e) {
-      if(e.target.classList.contains('modal-container')){
-        this.$emit('onCloseModal')
+      if (e.target.classList.contains("modal-container")) {
+        this.$emit("onCloseModal");
       }
     },
   },
@@ -51,6 +69,10 @@ export default {
     showCapitalOrNone() {
       if (!this.country.capital) return "No specified";
       return this.country.capital[0];
+    },
+    showAreaOrNone() {
+      if (!this.country.area) return "No specified";
+      return this.country.area.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     showRegionAndSubRegion() {
       return `${this.country.region || "No region"} ➡ ${
@@ -136,6 +158,31 @@ export default {
   box-shadow: 5px 5px 10px var(--accent-color);
 }
 
+
+ul.content-list {
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 2vh;
+}
+
+.content-list li {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  column-gap: .5vw;
+}
+
+.content-list .item .emoji {
+  width: 2.5rem;
+  font-style: normal;
+  font-size: 1.6rem;
+}
+
 .good-info #linkGoogleMap {
   align-self: center;
   margin-top: 3vh;
@@ -171,10 +218,11 @@ button#close-modal:hover {
   color: white;
 }
 
-@media (max-width: 425px) {  
+
+@media (max-width: 425px) {
   .modal-country {
     width: 90%;
     border-radius: 1rem;
-  } 
+  }
 }
 </style>
