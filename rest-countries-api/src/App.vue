@@ -2,21 +2,20 @@
   <NavBar :currentTheme="currentTheme" @onSetCurrentTheme="setCurrentTheme" />
   <div class="container">
     <div id="filters">
-      <FilterByCountry />
+      <FilterByCountry @filterCountriesResult="handleFilter" />
       <FilterByRegion @changeRegion="applyFilter" />
     </div>
 
-    <GridCountriesList
-      :countries="countries[actualPage] || []"
-      v-if="!msgErrorAPI"
-    />
-    <h4 class="title-error" v-else>{{ msgErrorAPI }}</h4>
+    <template v-if="!msgErrorAPI && actualPage">
+      <GridCountriesList :countries="mapPagesCountries[actualPage] || []" />
 
-    <NavPaginate
-      :pages="Object.keys(countries)"
-      :actualPage="actualPage"
-      @onChangePage="changePage"
-    />
+      <NavPaginate
+        :pages="Object.keys(mapPagesCountries).length"
+        :actualPage="actualPage"
+        @onChangePage="changePage"
+      />
+    </template>
+    <h4 class="title-error" v-else>{{ msgErrorAPI }}</h4>
   </div>
 </template>
 
@@ -40,7 +39,8 @@ export default {
   },
   data() {
     return {
-      countries: [],
+      allCountries: [],
+      mapPagesCountries: [],
       currentTheme: "dark-theme",
       msgErrorAPI: "",
       actualPage: 1,
@@ -66,17 +66,33 @@ export default {
       try {
         const { data } = await countriesApi.get("/all");
         this.msgErrorAPI = "";
+        this.allCountries = [...data];
 
-        this.countries = paginateCountries(data) || [];
+        // this.mapPagesCountries = paginateCountries(data) || [];
+        this.applyFilter(data);
       } catch (error) {
         // console.warn(error);
         this.msgErrorAPI = `${error.message}: Service unavailable. Try later :(`;
       }
     },
-
+    handleFilter(country) {
+      const filteredCountriesByInput = this.allCountries.filter(({ name }) =>
+        name.common.toLowerCase().includes(country)
+      );
+      // console.log(mapPagesInputCountry);
+      this.applyFilter(filteredCountriesByInput);
+    },
     applyFilter(filters = []) {
+      if (filters.length === 0) {
+        this.changePage(null);
+        this.mapPagesCountries = [];
+        this.msgErrorAPI = "No countries matched :(";
+        return;
+      }
+
+      this.msgErrorAPI = "";
       this.changePage(1);
-      this.countries = paginateCountries(filters) || [];
+      this.mapPagesCountries = paginateCountries(filters) || [];
     },
   },
 };

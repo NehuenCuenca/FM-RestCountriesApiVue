@@ -17,7 +17,7 @@ export default {
   name: "NavPaginate",
   props: {
     pages: {
-      type: Array,
+      type: Number,
       required: true,
     },
     actualPage: {

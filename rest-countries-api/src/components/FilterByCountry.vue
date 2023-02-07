@@ -5,6 +5,7 @@
       placeholder="Search for a country..."
       id="filter-by-country"
       v-model="inputCountry"
+      @input="$emit('filterCountriesResult', inputCountry.toLowerCase())"
     />
   </form>
 
@@ -22,6 +23,7 @@ import ModalCountry from "../components/ModalCountry.vue";
 
 export default {
   name: "FilterByCountry",
+  emits: ['filterCountriesResult'],
   data() {
     return {
       inputCountry: "",
