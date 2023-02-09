@@ -56,7 +56,6 @@ export default {
         this.msgError = data.message;
         this.toggleModal();
       }
-      this.inputCountry = ''
     },
     onInputCountry() {
       this.getCountryByName(this.inputCountry);
