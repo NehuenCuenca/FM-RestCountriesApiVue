@@ -1,9 +1,9 @@
 <template>
-  <form @submit.prevent="onInputCountry">
+  <form @submit.prevent="onInputCountry" class="filter-by-country-form">
     <input
       type="text"
-      placeholder="Search for a country..."
-      id="filter-by-country"
+      placeholder="🔍 Search for a country..."
+      class="filter-by-country-form__input"
       v-model="inputCountry"
       @input="$emit('filterCountriesResult', inputCountry.toLowerCase())"
     />
@@ -68,17 +68,21 @@ export default {
 </script>
 
 <style scoped>
-input {
-  width: 20rem;
-  font-size: 1rem;
-  padding: 0.5rem 2rem 0.5rem 0.5rem;
+/* .filter-by-country-form{} */
+
+.filter-by-country-form__input {
+  /* max-width: 80%; */
+  font: normal normal clamp(1.2rem, 7vw, 1.5rem) var(--default-font);
+  padding: 1rem 2rem;
   border-radius: 5px;
   outline: none;
   border: none;
+  color: var(--text-primary-color);
+  background-color: var(--background-color-primary);
+  box-shadow: 2px 2px 5px var(--accent-color);
 }
 
-::placeholder {
-  color: var(--text-primary-color);
-  font-size: 0.9rem;
+.filter-by-country-form__input::placeholder {
+  font: normal normal clamp(1rem, 5vw, 1.4rem) var(--default-font);
 }
 </style>
