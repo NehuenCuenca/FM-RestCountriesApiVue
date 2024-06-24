@@ -4,12 +4,13 @@
       :src="country.flags.png"
       :alt="`${country.name.common} flag`"
       @click="toggleModal"
+      class="grid-country-item__flag-image"
     />
-    <div class="basic-info">
-      <h4 id="country-name">{{ country.name.common }}</h4>
-      <span><b>Population</b>: {{ populationWithCommas }}</span>
-      <span><b>Region</b>: {{ country.region }}</span>
-      <span><b>Capital</b>: {{ showCapitalOrNone }}</span>
+    <div class="country-info">
+      <h4 class="country-info__name">{{ country.name.common }}</h4>
+      <span><b>Population:</b> {{ populationWithCommas }}</span>
+      <span><b>Region:</b> {{ country.region }}</span>
+      <span><b>Capital:</b> {{ showCapitalOrNone }}</span>
     </div>
   </li>
 
@@ -79,41 +80,39 @@ export default {
 </script>
 
 <style scoped>
-li.grid-country-item {
-  font-size: 1.3rem;
+
+.grid-country-item {
+  background-color: var(--background-color-primary);
   border-radius: 0.3rem;
+  box-shadow: 1px 1px 5px rgba(0,0,0, 0.1);
 }
 
-.grid-country-item img {
+.grid-country-item__flag-image {
   width: 100%;
-  height: 8rem;
+  height: 9rem;
   border-radius: 0.3rem 0.3rem 0 0;
   object-fit: fill;
   object-position: center center;
   cursor: pointer;
 }
 
-#country-name {
-  margin: 1rem 0 1.4rem 0;
-  font-size: 1.1rem;
-  text-align: start;
-  font-weight: bold;
-}
-
-.grid-country-item .basic-info {
-  padding: 0 1rem;
-  font-size: 1.1rem;
+.country-info {
+  padding: .5rem 1rem 2rem 1rem;
+  font: normal normal 400 clamp(1.1rem, 5vw, 1.2rem) var(--default-font);
+  min-height: 200px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
   text-align: start;
+  gap: 5px;
 }
 
-@media (max-width: 425px) {  
-
-  li.grid-country-item {
-    padding-bottom: 1rem;
- }
+.country-info__name {
+  margin: 1rem 0;
+  font: normal normal 600 clamp(1.5rem, 5vw, 1.6rem) var(--display-font);
+  text-align: start;
+  word-break: no-break;
 }
+
 </style>

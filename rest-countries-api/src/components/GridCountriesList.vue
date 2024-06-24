@@ -1,5 +1,5 @@
 <template>
-  <ul class="grid-countries-list">
+  <ul class="countries-list">
     <GridCountriesItem
       v-for="(country, index) in countries"
       :key="index"
@@ -26,30 +26,22 @@ export default {
 </script>
 
 <style scoped>
-ul.grid-countries-list {
-  width: 95%;
-  height: auto;
-  margin: 0;
-  padding: 1rem;
+.countries-list {
+  width: 100%;
+  padding: 0 2rem;
   list-style-type: none;
   display: grid;
   align-content: center;
+  justify-content: space-between;
   justify-content: center;
-  grid-template-columns: repeat(4, 15rem);
-  grid-auto-rows: 18rem;
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 250px));
+  gap: 4rem;
 }
 
-@media (max-width: 425px) {  
-
-  ul.grid-countries-list {
-    width: 95%;
-    display: grid;
-    align-content: center;
-    justify-content: center;
-    grid-template-columns: 15rem;
-    grid-auto-rows: auto;
-    gap: 20px;
+@media (width >= 1024px) {
+  .countries-list{
+    justify-content: space-between;
   }
 }
+
 </style>
