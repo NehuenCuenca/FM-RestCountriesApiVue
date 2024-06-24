@@ -1,20 +1,20 @@
 <template>
-  <nav id="paginate-countries">
-    <button
-      v-for="(page, index) in pages"
-      :key="index"
-      @click="onClickPage(page)"
-      class="page"
-      :class="(page == actualPage) ? 'active' : '' "
-    >
-      {{ page }}
-    </button>
+<!-- https://s3-alpha.figma.com/hub/file/2723787398/e1a96bd6-f56d-4522-9efe-c612a7f5b075-cover.png -->
+  <nav class="countries-pagination">
+    <button type="button" @click="onClickPage(1)" class="direction-button">Initial</button>
+    
+    <button type="button" @click="onClickPage($props.actualPage-1)" class="direction-button">◀</button>
+    <button type="button" class="page-button page-button_active">{{$props.actualPage}}</button>
+    <button type="button" @click="onClickPage($props.actualPage+1)" class="direction-button">▶</button>
+    
+    <button type="button" @click="onClickPage($props.pages)" class="direction-button">Last ({{ $props.pages }})</button>
   </nav>
 </template>
 
 <script>
 export default {
   name: "NavPaginate",
+
   props: {
     pages: {
       type: Number,
@@ -24,49 +24,55 @@ export default {
       type: Number,
     }
   },
+
+  emits: ['onChangePage'],
+
   methods: {
     onClickPage(page) {
+      const outOfLimitPage = page <= 0 || page > this.$props.pages
+      const onSamePage = page === this.$props.actualPage
+      if(outOfLimitPage || onSamePage) return
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
       this.$emit('onChangePage', Number(page))
     }
-  }
+  },
+
+  computed: {
+    haveMoreThanFourPages () { 
+      return this.$props.pages > 4
+    },
+  },
+
+  created() {
+    console.log(this.$props);
+  },
+
+  // data() { },
+
 };
 </script>
 
 <style scoped>
-nav#paginate-countries {
-  width: 100%;
-  height: auto;
+.countries-pagination{
+  color: var(--text-primary-color);
+  font: normal normal 400 clamp(1.2rem, 5vw, 1.6rem) var(--default-font);
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  border-top: 2px solid black;
-  border-bottom: 2px solid black;
-  column-gap: 1rem;
+  gap: .5rem;
 }
-
-.page {
-  cursor: pointer;
-  font-size: 2rem;
-  height: auto;
-  border: none;
-  background: none;
-  color: var(--primary-text-color);
+.direction-button,
+.page-button,
+.countries-pagination__filler-text{
+  color: var(--text-primary-color);
+  font: normal normal 400 clamp(1.2rem, 5vw, 1.5rem) var(--default-font);
 }
-
-.page:hover {
-  transition: color 200ms ease;
-  color: cadetblue;
+.direction-button,
+.page-button{
+  padding: .2rem .5rem;
+  border-radius: 10px;
+  transition: background .3s ease;
 }
-
-.active {
-  background-color: cadetblue;
-  padding: 0.4rem;
-  border-radius: 1rem;
-}
-
-.page.active:hover {
-  color: inherit;
+.page-button_active, .page-button:hover, .direction-button:hover{
+  background-color: var(--accent-color);
 }
 </style>

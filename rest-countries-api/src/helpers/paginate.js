@@ -2,7 +2,7 @@
 
 const paginateCountries = ( countries = [] ) => {
     
-    const countriesPerPage = 12
+    const countriesPerPage = 8
     let page = 1
     let mapPagesCountries = {}
 
