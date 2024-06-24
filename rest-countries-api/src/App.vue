@@ -1,22 +1,24 @@
 <template>
-  <NavBar :currentTheme="currentTheme" @onSetCurrentTheme="setCurrentTheme" />
-  <div class="container">
-    <div id="filters">
+  <header>
+    <NavBar :currentTheme="currentTheme" @onSetCurrentTheme="setCurrentTheme" />
+  </header>
+  <main class="container">
+    <section class="filters-section">
       <FilterByCountry @filterCountriesResult="handleFilter" />
       <FilterByRegion @changeRegion="applyFilter" />
-    </div>
+    </section>
 
-    <template v-if="!msgErrorAPI && actualPage">
+    <template v-if="!msgErrorAPI && allCountries.length>0">
       <GridCountriesList :countries="mapPagesCountries[actualPage] || []" />
 
-      <NavPaginate
+      <NavPaginate 
         :pages="Object.keys(mapPagesCountries).length"
         :actualPage="actualPage"
         @onChangePage="changePage"
       />
     </template>
     <h4 class="title-error" v-else>{{ msgErrorAPI }}</h4>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -106,6 +108,8 @@ export default {
   --background-color-secondary: hsl(0, 0%, 98%);
   --accent-color: hsl(0, 0%, 52%);
   --text-primary-color: black;
+  --display-font: 'Tahoma';
+  --default-font: sans-serif, 'Arial';
 }
 
 :root.dark-theme {
@@ -113,6 +117,55 @@ export default {
   --background-color-secondary: hsl(207, 26%, 17%);
   --accent-color: hsl(200, 15%, 8%);
   --text-primary-color: white;
+}
+
+/* RESETS */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+p {
+  overflow-wrap: break-word;
+}
+
+a { 
+  color:inherit;
+  text-decoration: none;
+}
+
+button{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+ul,ol { 
+  list-style-type: none;
+  padding: 0
+}
+
+html {
+  font-family: var(--default-font);
+  width: 100%;
+  scroll-behavior: smooth;
+}
+
+header {
+  width: 100%;
 }
 
 html,
@@ -123,32 +176,52 @@ body {
   padding: 0;
 }
 
-html {
-  box-sizing: border-box;
-  font-family: "JetBrains Mono", monospace;
+/* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
+/** {
+  scrollbar-width: thin;
+  scrollbar-color: #007193 #DFE9EB;
+}*/
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #DFE9EB;
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
+*::-webkit-scrollbar-track:hover {
+  background-color: #B8C0C2;
 }
+
+*::-webkit-scrollbar-track:active {
+  background-color: #B8C0C2;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: dimgray;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: dimgray;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: slategrey;
+
+}
+
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: var(--text-primary-color);
   width: 100%;
   height: auto;
   min-height: 100vh;
   background-color: var(--background-color-secondary);
-}
-
-nav#nav-bar {
-  background-color: var(--background-color-primary);
-  box-shadow: 2px 2px 5px var(--accent-color);
 }
 
 .container {
@@ -163,10 +236,13 @@ nav#nav-bar {
   padding: 2rem 0;
 }
 
-#filters {
-  width: 80%;
+.filters-section {
+  width: 100%;
+  padding: 1rem 2rem;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 3rem;
+  justify-content: center;
   align-items: center;
 }
 
@@ -178,36 +254,13 @@ nav#nav-bar {
   text-shadow: 2px 2px 10px black;
 }
 
-.grid-country-item {
-  background-color: var(--background-color-primary);
-  box-shadow: 1px 1px 11px var(--accent-color);
-}
-.modal-country {
-  background-color: var(--background-color-primary);
-  color: var(--text-primary-color);
+body:has(.modal-container) {
+  overflow: hidden;
 }
 
-input#filter-by-country {
-  color: var(--text-primary-color);
-  background-color: var(--background-color-primary);
-  box-shadow: 1px 1px 10px var(--accent-color);
-}
-
-select#filter-by-region {
-  color: var(--text-primary-color);
-  background-color: var(--background-color-primary);
-  box-shadow: 1px 1px 10px var(--accent-color);
-}
-
-@media (max-width: 425px) {
-  #filters {
-    width: 80%;
-    min-width: 20rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    row-gap: 5vh;
+@media (width >= 768px) {
+  .filters-section {
+    justify-content: space-between;
   }
 }
 </style>
