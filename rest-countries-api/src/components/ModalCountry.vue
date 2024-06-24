@@ -1,45 +1,44 @@
 <template>
   <div class="modal-container" @click="onCloseShadow">
-    <div class="modal-country" v-if="country">
-      <button @click="$emit('onCloseModal')" id="close-modal">Back</button>
-      <div class="good-info">
-        <img :src="country.flags.png" :alt="`${country.name.common} flag`" />
+    <div class="modal-body" v-if="country">
+      <button @click="$emit('onCloseModal')" class="close-modal-button">Back</button>
+      <div class="country-info">
+        <img class="country-info__flag" :src="country.flags.png" :alt="`${country.name.common} flag`" />
 
-        <ul class="content-list">
-          <li class="item">
-            <i class="emoji">📛</i>
-            <span><u>Name:</u> {{ country.name.common }} ('{{ country.flag }}')</span>
+        <ul class="country-info-list">
+          <li class="country-info-list-item">
+            <i class="country-info-list-item__emoji">📛</i>
+            <span class="country-info-list-item__title"><u>Name:</u> {{ country.name.common }} ('{{ country.flag }}')</span>
           </li>
-          <li class="item">
-            <i class="emoji">📍</i>
-            <span><u>Capital:</u> {{ showCapitalOrNone }}</span>
+          <li class="country-info-list-item">
+            <i class="country-info-list-item__emoji">📍</i>
+            <span class="country-info-list-item__title"><u>Capital:</u> {{ showCapitalOrNone }}</span>
           </li>
-          <li class="item">
-            <i class="emoji">🌏</i>
-            <span><u>Region/Subregion:</u> {{ showRegionAndSubRegion }}</span>
+          <li class="country-info-list-item">
+            <i class="country-info-list-item__emoji">🌏</i>
+            <span class="country-info-list-item__title"><u>Region/Subregion:</u> {{ showRegionAndSubRegion }}</span>
           </li>
-          <li class="item">
-            <i class="emoji">📐</i>
-            <span><u>Area:</u> {{ showAreaOrNone }} km²</span>
+          <li class="country-info-list-item">
+            <i class="country-info-list-item__emoji">📐</i>
+            <span class="country-info-list-item__title"><u>Area:</u> {{ showAreaOrNone }} km²</span>
           </li>
-          <li class="item">
-            <i class="emoji">💲</i>
-            <span><u>Currencies:</u> {{ showCurrencies }}</span>
+          <li class="country-info-list-item">
+            <i class="country-info-list-item__emoji">💲</i>
+            <span class="country-info-list-item__title"><u>Currencies:</u> {{ showCurrencies }}</span>
           </li>
-          <li class="item">
-            <i class="emoji">👅</i>
-            <span><u>Languages:</u> {{ showLanguages }}</span>
+          <li class="country-info-list-item">
+            <i class="country-info-list-item__emoji">👅</i>
+            <span class="country-info-list-item__title"><u>Languages:</u> {{ showLanguages }}</span>
           </li>
-          <span id="linkGoogleMap"
-          ><a :href="country.maps.googleMaps" target="_blank"
+          <a class="link-to-google-maps" :href="country.maps.googleMaps" target="_blank"
             >👀 Look in Google Maps 🌐</a
-          ></span
-        >
+          >
         </ul>
       </div>
     </div>
-    <div class="modal-country" id="modal-error" v-else>
-      <button @click="$emit('onCloseModal')" id="close-modal">Close</button>
+
+    <div class="modal-country modal-error" v-else>
+      <button @click="$emit('onCloseModal')" class="close-modal">Close</button>
       <h3>Error: {{ msgError }}.</h3>
       I don't know that country yet 😶
     </div>
@@ -106,123 +105,104 @@ export default {
   bottom: 0;
   left: 0;
   z-index: 1000;
+  width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
 }
 
-.modal-country {
-  width: 60%;
+.modal-body {
+  background-color: var(--background-color-primary);
+  width: 90%;
   height: 85vh;
-  padding: 2rem 2rem;
-  border-radius: 4rem 1rem;
+  padding: 2rem 1.5rem;
+  border-radius: 0.3rem;
   overflow-y: auto;
-  overscroll-behavior: contain;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
 }
 
-.modal-country .good-info {
+.country-info {
   width: 100%;
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   row-gap: 1vh;
 }
-.modal-country#modal-error {
-  height: 30vh;
-  justify-content: flex-start;
-  align-items: center;
-  font-size: 1.1rem;
-}
-#modal-error h3 {
-  color: var(--DarkGray);
-}
 
-.good-info span {
-  font-size: 1.5rem;
-}
-
-.good-info img {
-  width: 60%;
-  height: 10rem;
+.country-info__flag {
+  min-height: 20vh;
+  max-height: 30vh;
+  width: 90%;
   align-self: center;
-  margin-bottom: 3vh;
+  margin-bottom: 4vh;
   border: 2px solid var(--accent-color);
   box-shadow: 5px 5px 10px var(--accent-color);
 }
 
 
-ul.content-list {
+.country-info-list {
   width: 100%;
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 2vh;
+  row-gap: 2rem;
 }
 
-.content-list li {
+.country-info-list-item {
   width: 100%;
   display: flex;
-  align-items: center;
-  column-gap: .5vw;
+  align-items: flex-start;
+  column-gap: .5rem;
+  font: normal normal 400 clamp(1.5rem, 7vw, 1.8rem) var(--default-font);
 }
 
-.content-list .item .emoji {
-  width: 2.5rem;
+.country-info-list-item__emoji {
+  width: 3rem;
   font-style: normal;
   font-size: 1.6rem;
 }
 
-.good-info #linkGoogleMap {
-  align-self: center;
-  margin-top: 3vh;
+.country-info-list-item__title{
+  text-align: start;
 }
 
-.good-info a {
-  color: cyan;
+
+.link-to-google-maps {
+  color: steelblue;
   font-size: 1.8rem;
   font-weight: bold;
   text-decoration: none;
-  text-shadow: 1px 1px 5px black;
+  transition: color .3s ease;
 }
-a:hover {
-  color: darkcyan;
-  transition: color 300ms ease;
-}
-a:visited {
+a:hover, a:visited {
   color: darkcyan;
 }
 
-button#close-modal {
+.close-modal-button {
   position: sticky;
   top: 0%;
-  left: 93%;
-  font-size: 1.3rem;
+  left: 90%;
+  margin-bottom: 1rem;
+  font: normal normal 400 clamp(1.4rem, 5vw, 1.7rem) var(--default-font);
   padding: 0.5rem 1.5rem;
   border-radius: 5px;
-  cursor: pointer;
-}
-button#close-modal:hover {
-  transition: all 0.3s ease;
   background-color: red;
   color: white;
 }
 
+@media (width >= 1280px){
+  .modal-body {
+    width: 60%;
+    padding: 2rem;
+  }
 
-@media (max-width: 425px) {
-  .modal-country {
-    width: 90%;
-    border-radius: 1rem;
+  .country-info__flag {
+    width: 70%;
   }
 }
 </style>
