@@ -1,8 +1,8 @@
 <template>
-  <nav id="nav-bar">
-    <span>Where in the world?</span>
+  <nav class="navbar">
+    <span class="navbar__title">Where in the world?</span>
     <button
-    id="changeTheme" 
+    class="navbar__theme-toggler" 
       @click="$emit('onSetCurrentTheme', (currentTheme === 'light-theme') ? 'dark-theme' : 'light-theme')">
       {{ oppositeTheme }}
     </button>
@@ -20,39 +20,46 @@ export default {
   computed: {
     oppositeTheme() {
       return (this.currentTheme === 'light-theme') 
-      ? '🌚 Dark theme' 
-      : '🌞 Light theme'
+      ? '🌚 Dark mode' 
+      : '🌞 Light mode'
     }
   }
 }
 </script>
 
 <style>
-nav {
+.navbar {
   width: 100%;
-  padding: 1rem 2rem;
+  padding: 2rem 1rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  background-color: var(--background-color-primary);
+  box-shadow: 2px 2px 5px var(--accent-color);
 }
-nav span {
+.navbar__title {
   font-weight: bold;
   letter-spacing: 1px;
   user-select: none;
+  font: normal normal 700 clamp(1.1rem, 5vw, 1.5rem) var(--display-font)
 }
-button#changeTheme{
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
+.navbar__theme-toggler{
   color: var(--text-primary-color);
   padding: 0;
-}
-nav > *  {
-  font-size: 1.1rem;
+  font: normal normal 400 clamp(1.1rem, 5vw, 1.5rem) var(--default-font);
+  text-transform: capitalize;
 }
 
-@media (max-width: 425px) {  
-  nav#nav-bar { 
-    width: 100%;
+@media (width >= 768px) {
+  .navbar {
+    padding: 2rem;
+  }
+
+  .navbar__title {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+  }
+  .navbar__theme-toggler{
+    font-size: clamp(1.5rem, 7vw, 1.8rem);
   }
 }
 </style>
